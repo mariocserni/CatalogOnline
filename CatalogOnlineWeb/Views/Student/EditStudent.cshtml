@@ -1,9 +1,9 @@
 ﻿@model Student
 
-<form method="post">
+<form method="post" asp-action="EditStudent">
 	<div class="border p-3 mt-4">
 		<div class="row pb-2">
-			<h2 class="text-primary">Creaza Cont Nou de Student</h2>
+			<h2 class="text-primary">Modifica Contul</h2>
 			<hr />
 		</div>
 		<div class="mb-3">
@@ -28,7 +28,8 @@
 			<input asp-for="An" class="form-control" />
 			<span asp-validation-for="An" class="text-danger"></span>
 		</div>
-		<button type="submit" class="btn btn-primary">Creaza Contul</button>
+		<input type="hidden" asp-for="StudentId" />
+		<button type="submit" class="btn btn-primary">Modifica Contul</button>
 		<a asp-controller="Student" asp-action="Index" class="btn btn-secondary">Inapoi la Lista</a>
 	</div>
 </form>

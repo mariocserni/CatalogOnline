@@ -26,6 +26,9 @@
             <th>
                 Semestru
             </th>
+            <th>
+
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -40,6 +43,14 @@
                 </td>
                 <td>
                     @obj.Semestru
+                </td>
+                <td>
+                    <div class="w-40 btn-group" role="group">
+                        <a asp-controller="Disciplina" asp-action="EditSubject" asp-route-id="@obj.DisciplinaId" class="btn btn-primary">Modifica</a>
+                    </div>
+                    <div class="w-40 btn-group" role="group">
+                        <a asp-controller="Disciplina" asp-action="DeleteSubject" asp-route-id="@obj.DisciplinaId" class="btn btn-primary">Sterge</a>
+                    </div>
                 </td>
             </tr>
         }

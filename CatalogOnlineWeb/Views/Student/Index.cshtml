@@ -29,6 +29,9 @@
             <th>
                 An
             </th>
+            <th>
+
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -46,6 +49,14 @@
                 </td>
                 <td>
                     @obj.An
+                </td>
+                <td>
+                    <div class="w-40 btn-group" role="group">
+                        <a asp-controller="Student" asp-action="EditStudent" asp-route-id="@obj.StudentId" class="btn btn-primary">Modifica</a>
+                    </div>
+                    <div class="w-40 btn-group" role="group">
+                        <a asp-controller="Student" asp-action="DeleteStudent" asp-route-id="@obj.StudentId" class="btn btn-primary">Sterge</a>
+                    </div>
                 </td>
             </tr>
         }

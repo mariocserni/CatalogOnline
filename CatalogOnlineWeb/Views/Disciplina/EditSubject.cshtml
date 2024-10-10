@@ -1,9 +1,9 @@
 ﻿@model Disciplina
 
-<form method="post">
+<form method="post" asp-action="EditSubject">
 	<div class="border p-3 mt-4">
 		<div class="row pb-2">
-			<h2 class="text-primary">Creaza o Disciplina Noua</h2>
+			<h2 class="text-primary">Modifica Disciplina</h2>
 			<hr />
 		</div>
 		<div class="mb-3">
@@ -23,7 +23,8 @@
 			<span asp-validation-for="Semestru" class="text-danger"></span>
 
 		</div>
-		<button type="submit" class="btn btn-primary">Modifica Disciplina</button>
+		<input type="hidden" asp-for="DisciplinaId" />
+		<button type="submit" class="btn btn-primary">Creaza Disciplina</button>
 		<a asp-controller="Disciplina" asp-action="Index" class="btn btn-secondary">Inapoi la Lista</a>
 	</div>
 </form>

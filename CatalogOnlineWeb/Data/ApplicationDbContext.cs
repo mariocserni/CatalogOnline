@@ -14,6 +14,5 @@ namespace CatalogOnlineWeb.Data
         public DbSet<Disciplina> Discipline { get; set; }
         public DbSet<Contract> Contracte { get; set; }
         public DbSet<Admin> Admini { get; set; }
-        public DbSet<Nota> Note { get; set; }
     }
 }

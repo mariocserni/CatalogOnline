@@ -13,6 +13,9 @@ namespace CatalogOnlineWeb.Models
         [ForeignKey(nameof(Disciplina))]
         public int DisciplinaId { get; set; }
         public double Medie { get; set; }
-        public List<Nota> Note { get; set; }
+        public double NotaPrezentarea1 { get; set; }
+        public double NotaPrezentarea2 { get; set; }
+        public double NotaPrezentarea3 { get; set; }
+        public double NotaParcurs { get; set; }
     }
 }

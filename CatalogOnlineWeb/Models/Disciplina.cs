@@ -22,5 +22,9 @@ namespace CatalogOnlineWeb.Models
         [Range(1, 2, ErrorMessage = "Valoarea poate fi doar intre 1 si 2!")]
         [Required(ErrorMessage = "Acest camp este obligatoriu!")]
         public int? Semestru { get; set; }
+        [DisplayName("Credite*")]
+        [Range(1, 6, ErrorMessage = "Valoarea poate fi doar intre 1 si 6!")]
+        [Required(ErrorMessage = "Acest camp este obligatoriu!")]
+        public int Credite { get; set; }    
     }
 }

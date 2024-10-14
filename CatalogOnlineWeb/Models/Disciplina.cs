@@ -25,6 +25,6 @@ namespace CatalogOnlineWeb.Models
         [DisplayName("Credite*")]
         [Range(1, 6, ErrorMessage = "Valoarea poate fi doar intre 1 si 6!")]
         [Required(ErrorMessage = "Acest camp este obligatoriu!")]
-        public int Credite { get; set; }    
+        public int? Credite { get; set; }    
     }
 }

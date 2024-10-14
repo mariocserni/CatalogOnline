@@ -23,7 +23,13 @@
 			<span asp-validation-for="Semestru" class="text-danger"></span>
 
 		</div>
-		<button type="submit" class="btn btn-primary">Modifica Disciplina</button>
+		<div class="mb-3">
+			<label asp-for="Credite"></label>
+			<input asp-for="Credite" class="form-control" />
+			<span asp-validation-for="Credite" class="text-danger"></span>
+
+		</div>
+		<button type="submit" class="btn btn-primary">Creaza Disciplina</button>
 		<a asp-controller="Disciplina" asp-action="Index" class="btn btn-secondary">Inapoi la Lista</a>
 	</div>
 </form>

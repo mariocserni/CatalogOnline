@@ -1,4 +1,5 @@
 ﻿using CatalogOnlineWeb.Data;
+using CatalogOnlineWeb.Migrations;
 using CatalogOnlineWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Runtime.CompilerServices;
@@ -27,18 +28,32 @@ namespace CatalogOnlineWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateStudent(Student obj)
+        public IActionResult CreateStudent(Student student)
         {
             ModelState.Remove("Email");
             if (ModelState.IsValid)
             {
-                obj.Email = obj.Prenume.Split(' ')[0].ToLower() + "." + obj.Nume.ToLower() + "@student.upt.ro";
-                if(obj.An == null)
+                student.Email = student.Prenume.Split(' ')[0].ToLower() + "." + student.Nume.ToLower() + "@student.upt.ro";
+                if(student.An == null)
                 {
-                    obj.An = 1;
+                    student.An = 1;
                 }
-                _db.Studenti.Add(obj);
+                _db.Studenti.Add(student);
                 _db.SaveChanges();
+				List<Disciplina> discipline = _db.Discipline.Where(d => d.An <= student.An).ToList();
+				foreach(Disciplina disciplina in discipline)
+				{
+					Contract contract = new Contract {
+						StudentId = student.StudentId,
+						DisciplinaId = disciplina.DisciplinaId,
+						NotaPrezentarea1 = 0,
+						NotaPrezentarea2 = 0,
+						NotaPrezentarea3 = 0,
+						NotaParcurs = 0,
+						Medie = 0
+					};
+					_db.Contracte.Add(contract);
+				}
 				TempData["succes"] = "Contul a fost creat!";
                 return RedirectToAction("Index");
             }
@@ -49,7 +64,7 @@ namespace CatalogOnlineWeb.Controllers
 				{
 					Console.WriteLine(error.ErrorMessage); // Sau folosește un debugger pentru a inspecta erorile
 				}
-				return View(obj);
+				return View(student);
 			}
 			return View();
         }
@@ -98,6 +113,11 @@ namespace CatalogOnlineWeb.Controllers
 			if (student == null)
 			{
 				return NotFound();
+			}
+			var contracte = _db.Contracte.Where(c => c.StudentId == id).ToList();
+			foreach(Contract contract in contracte)
+			{
+				_db.Contracte.Remove(contract);
 			}
             _db.Studenti.Remove(student);
             _db.SaveChanges();

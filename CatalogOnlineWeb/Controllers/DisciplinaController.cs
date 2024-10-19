@@ -32,6 +32,20 @@ namespace CatalogOnlineWeb.Controllers
             {
                 _db.Discipline.Add(disciplina);
                 _db.SaveChanges();
+                List<Student> studenti = _db.Studenti.Where(s => s.An >= disciplina.An).ToList();
+                foreach(Student student in studenti)
+                {
+                    Contract contract = new Contract {
+                        StudentId = student.StudentId,
+                        DisciplinaId = disciplina.DisciplinaId,
+                        NotaPrezentarea1 = 0,
+                        NotaPrezentarea2 = 0,
+                        NotaPrezentarea3 = 0,
+                        NotaParcurs = 0,
+                        Medie = 0
+                    };
+					_db.Contracte.Add(contract);
+				}
                 TempData["succes"] = "Disciplina a fost creata!";
                 return RedirectToAction("Index");
             }
@@ -76,6 +90,11 @@ namespace CatalogOnlineWeb.Controllers
             if (subject == null)
             {
                 return NotFound();
+            }
+            var contracte = _db.Contracte.Where(c => c.DisciplinaId == id);
+            foreach(Contract contract in contracte) 
+            {
+                _db.Contracte.Remove(contract);
             }
             _db.Discipline.Remove(subject);
             _db.SaveChanges();

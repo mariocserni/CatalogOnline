@@ -1,0 +1,58 @@
+﻿@model SituatieScolaraViewModel
+@{
+    ViewData["Title"] = "SituatieScolara";
+}
+
+<h1>Situatie Scolara pentru @Model.Student.Nume @Model.Student.Prenume</h1>
+
+<table class="table table-bordered" style="width:100%">
+    <thead>
+        <tr>
+            <th>
+                Materie
+            </th>
+            <th>
+                Semestru
+            </th>
+            <th>
+                Credite
+            </th>
+            <th>
+                Nota Parcurs
+            </th>
+            <th>
+                Nota Prezentarea 1
+            </th>
+            <th>
+                Nota Prezentarea 2
+            </th>
+            <th>
+                Nota Prezentarea 3
+            </th>
+            <th>
+                Nota Finala
+            </th>
+            <th>
+                Situatie
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var obj in Model.Discipline)
+        {
+            <tr>
+                <td>
+                    @obj.Titlu
+                </td>
+                <td>
+                    @obj.Semestru
+                </td>
+                <td>
+                    @obj.Credite
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+

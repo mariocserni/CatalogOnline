@@ -45,6 +45,7 @@ namespace CatalogOnlineWeb.Controllers
                         Medie = 0
                     };
 					_db.Contracte.Add(contract);
+                    _db.SaveChanges();
 				}
                 TempData["succes"] = "Disciplina a fost creata!";
                 return RedirectToAction("Index");

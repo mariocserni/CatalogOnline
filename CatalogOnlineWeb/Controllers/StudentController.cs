@@ -53,7 +53,8 @@ namespace CatalogOnlineWeb.Controllers
 						Medie = 0
 					};
 					_db.Contracte.Add(contract);
-				}
+                    _db.SaveChanges();
+                }
 				TempData["succes"] = "Contul a fost creat!";
                 return RedirectToAction("Index");
             }

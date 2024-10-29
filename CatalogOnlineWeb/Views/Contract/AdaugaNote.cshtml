@@ -1,0 +1,89 @@
+﻿@model SituatieScolaraViewModel
+
+<h1>Adauga Note pentru @Model.Student.Nume @Model.Student.Prenume</h1>
+
+<div class="row mb-4">
+    <div class="col-md-8">
+        <h3>Selecteaza Materia</h3>
+        <form asp-controller="Contract" asp-action="AdaugaNote" method="post">
+            <div class="form-group mb-3">
+                <label for="DisciplinaDropdown">Materia</label>
+                <select id="DisciplinaDropdown" class="form-control" name="disciplinaId" onchange="showNoteFields(); updateNotes(this.value);">
+                    <option value="">Selecteaza Materia</option>
+                    @foreach (var disciplina in Model.Discipline)
+                    {
+                        <option value="@disciplina.DisciplinaId">@disciplina.Titlu</option>
+                    }
+                </select>
+
+            </div>
+
+            <div id="NoteFields" class="d-none">
+                <h4>Introdu Note</h4>
+                <input type="hidden" name="studentId" value="@Model.Student.StudentId" />
+
+                <div class="form-group mb-3">
+                    <label for="NotaParcurs">Nota Parcurs</label>
+                    <input type="number" class="form-control" id="NotaParcurs" name="NotaParcurs" step="0.01" min="0" max="10" value="@Model.Contracte.FirstOrDefault()?.NotaParcurs">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="NotaPrezentarea1">Nota Prezentarea 1</label>
+                    <input type="number" class="form-control" id="NotaPrezentarea1" name="NotaPrezentarea1" step="0.01" min="0" max="10" value="@Model.Contracte.FirstOrDefault()?.NotaPrezentarea1">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="NotaPrezentarea2">Nota Prezentarea 2</label>
+                    <input type="number" class="form-control" id="NotaPrezentarea2" name="NotaPrezentarea2" step="0.01" min="0" max="10" value="@Model.Contracte.FirstOrDefault()?.NotaPrezentarea2">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="NotaPrezentarea3">Nota Prezentarea 3</label>
+                    <input type="number" class="form-control" id="NotaPrezentarea3" name="NotaPrezentarea3" step="0.01" min="0" max="10" value="@Model.Contracte.FirstOrDefault()?.NotaPrezentarea3">
+                </div>
+
+
+
+                <button type="submit" class="btn btn-primary">Salveaza Note</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        function showNoteFields() {
+            var dropdown = document.getElementById("DisciplinaDropdown");
+            var selectedValue = dropdown.options[dropdown.selectedIndex].value;
+
+            if (selectedValue !== "") {
+                document.getElementById("NoteFields").classList.remove("d-none");
+            } else {
+                document.getElementById("NoteFields").classList.add("d-none");
+            }
+        }
+    </script>
+
+    <script type="text/javascript">
+        function updateNotes(disciplinaId) {
+            console.log("logiC");
+            var studentId = @Model.Student.StudentId;
+
+            $.ajax({
+                url: '/Contract/GetNoteDisciplina',
+                type: 'GET',
+                data: { studentId: studentId, disciplinaId: disciplinaId },
+                success: function (data) {
+                    if (data.success) {
+                        $('#NotaParcurs').val(data.notaParcurs);
+                        $('#NotaPrezentarea1').val(data.notaPrezentarea1);
+                        $('#NotaPrezentarea2').val(data.notaPrezentarea2);
+                        $('#NotaPrezentarea3').val(data.notaPrezentarea3);
+                    } else {
+                        alert('Nu s-au putut încărca notele pentru disciplina selectată.');
+                    }
+                },
+                error: function (error) {
+                    console.error("Eroare la preluarea notelor: ", error);
+                }
+            });
+        }
+    </script>
+}

@@ -3,54 +3,70 @@
     ViewData["Title"] = "SituatieScolara";
 }
 
-<h1>Situatie Scolara pentru @Model.Student.Nume @Model.Student.Prenume</h1>
+<div class="row mb-4">
+    <div class="col-md-8">
+        <h1>Situatie Scolara pentru @Model.Student.Nume @Model.Student.Prenume</h1>
+    </div>
+    <div class="col-md-4 text-end">
+        <a asp-controller="Contract" asp-action="AdaugaNote" asp-route-studentId="@Model.Student.StudentId" class="btn btn-primary">Adauga Note</a>
+
+    </div>
+</div>
 
 <table class="table table-bordered" style="width:100%">
     <thead>
-        <tr>
-            <th>
-                Materie
-            </th>
-            <th>
-                Semestru
-            </th>
-            <th>
-                Credite
-            </th>
-            <th>
-                Nota Parcurs
-            </th>
-            <th>
-                Nota Prezentarea 1
-            </th>
-            <th>
-                Nota Prezentarea 2
-            </th>
-            <th>
-                Nota Prezentarea 3
-            </th>
-            <th>
-                Nota Finala
-            </th>
-            <th>
-                Situatie
-            </th>
-        </tr>
     </thead>
     <tbody>
-        @foreach (var obj in Model.Discipline)
+        @for (int i = 0; i < Model.Student.An; i++)
         {
-            <tr>
-                <td>
-                    @obj.Titlu
-                </td>
-                <td>
-                    @obj.Semestru
-                </td>
-                <td>
-                    @obj.Credite
-                </td>
-            </tr>
+            <h3>Anul @(i + 1)</h3>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Materie</th>
+                        <th>Semestru</th>
+                        <th>Credite</th>
+                        <th>Nota Parcurs</th>
+                        <th>Nota Prezentarea 1</th>
+                        <th>Nota Prezentarea 2</th>
+                        <th>Nota Prezentarea 3</th>
+                        <th>Nota Finala</th>
+                        <th>Situatie</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var disciplina in Model.Discipline.Where(d => d.An == i + 1))
+                    {
+                        <tr>
+                            <td>@disciplina.Titlu</td>
+                            <td>@disciplina.Semestru</td>
+                            <td>@disciplina.Credite</td>
+                            @foreach(var obj in Model.Contracte.Where(c => c.DisciplinaId == disciplina.DisciplinaId))
+                            {
+                                <td>@obj.NotaParcurs</td>
+                                <td>@obj.NotaPrezentarea1</td>
+                                <td>@obj.NotaPrezentarea2</td>
+                                <td>@obj.NotaPrezentarea3</td>
+                                <td>@obj.Medie</td>
+                                @if(obj.Medie >= 5)
+                                {
+                                    <td>Promovat</td>
+                                }
+                                else
+                                {
+                                    <td>Nepromovat</td>
+                                }
+                            }
+                            @*<td>@obj.NotaParcurs</td>
+                            <td>@obj.NotaPrezentarea1</td>
+                            <td>@obj.NotaPrezentarea2</td>
+                            <td>@obj.NotaPrezentarea3</td>
+                            <td>@obj.NotaFinala</td>
+                            <td>@obj.Situatie</td>*@
+                        </tr>
+                    }
+                </tbody>
+            </table>
         }
     </tbody>
 </table>

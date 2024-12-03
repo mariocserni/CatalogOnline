@@ -75,7 +75,18 @@ namespace CatalogOnlineWeb.Controllers
                 contract.NotaPrezentarea2 = NotaPrezentarea2;
                 contract.NotaPrezentarea3 = NotaPrezentarea3;
 
-                contract.Medie = (NotaParcurs + NotaPrezentarea1 + NotaPrezentarea2 + NotaPrezentarea3) / 4;
+                if (NotaPrezentarea2 == 0 && NotaPrezentarea3 == 0)
+                {
+                    contract.Medie = (NotaParcurs + NotaPrezentarea1) / 2;
+                }
+                else if (NotaPrezentarea3 == 0)
+                {
+                    contract.Medie = (NotaParcurs + NotaPrezentarea2) / 2;
+                }
+                else
+                {
+                    contract.Medie = (NotaParcurs + NotaPrezentarea3) / 2;
+                }
 
                 _db.SaveChanges(); 
             }
